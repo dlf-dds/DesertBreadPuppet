@@ -1,9 +1,9 @@
 ---
-# HFS (HTTP file server) credentials for pulling sensor binaries.
-# TODO: Get credentials from vendor (Bohdan) — either their shared HFS or copy files to ours.
-hfs_user: '$CHANGEME_HFS_USER'
-hfs_password: '$CHANGEME_HFS_PASSWORD'
-pip_extra_index_url: 'https://$CHANGEME_HFS_USER:$CHANGEME_HFS_PASSWORD@build1.swdev.eraketa.com/common/'
+# Vendor HFS (HTTP file server) credentials for pulling sensor binaries.
+# TODO: Mirror files to our Caddy HFS and update URLs to point there.
+hfs_user: 'aor'
+hfs_password: 'l31dUcStIqqrAqjTHtFw'
+pip_extra_index_url: 'https://aor:l31dUcStIqqrAqjTHtFw@build1.swdev.eraketa.com/common/'
 
 # how often puppet should trigger its run. In dev, can be 3-5m, in prod recommended at least 30m.
 sf::config::puppet_config::runinterval_value: 30m
