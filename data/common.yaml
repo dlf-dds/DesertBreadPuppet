@@ -1,0 +1,124 @@
+---
+# HFS (HTTP file server) credentials for pulling sensor binaries.
+# TODO: Get credentials from vendor (Bohdan) — either their shared HFS or copy files to ours.
+hfs_user: '$CHANGEME_HFS_USER'
+hfs_password: '$CHANGEME_HFS_PASSWORD'
+pip_extra_index_url: 'https://$CHANGEME_HFS_USER:$CHANGEME_HFS_PASSWORD@build1.swdev.eraketa.com/common/'
+
+# how often puppet should trigger its run. In dev, can be 3-5m, in prod recommended at least 30m.
+sf::config::puppet_config::runinterval_value: 30m
+
+sf::config::modem::modem_version: 0.4.5
+
+# these override /etc/hosts domain with a specific IP (10.10.0.1 is an admin server DeviceVPN IP address), to force
+# MQTT data through VPN.
+sf::config::hosts::hosts:
+  - host: mqtt.skysense.desertbread.net
+    ip: 10.10.0.1
+
+sf::config::zabbix::server:
+  host: '10.10.0.1'
+  port: 10051
+  metadata: 93205e5d142b72a47cb90bbca55c757d52c4843c2dddc770e5c0956705490a6a
+
+sf::config::loramesh::enable: true
+sf::config::loramesh::package_version: '2.4.4'
+sf::config::loramesh::transport_key: 'W/5mKeAtNuwow1DrzkFGxC3jjcKss0sI08oFH9q+9yc='
+sf::config::loramesh::zabbix_servers:
+  - host: '10.10.0.1'
+    port: 10051
+    metadata: 93205e5d142b72a47cb90bbca55c757d52c4843c2dddc770e5c0956705490a6a
+
+sf::config::telemetry_sender::zabbix_servers:
+  - host: '10.10.0.1'
+    port: 10051
+    metadata: 93205e5d142b72a47cb90bbca55c757d52c4843c2dddc770e5c0956705490a6a
+
+sf::config::mqtt_bridge::mqtt_hostname: mqtt.skysense.desertbread.net
+sf::config::mqtt_bridge::mqtt_port: 8883
+
+# vpn1 is a `device` VPN, vpn2 is an `admin` VPN.
+sf::config::openvpn::server_hostname: 'vpn1.skysense.desertbread.net'
+sf::config::openvpn::server_port: 1194
+sf::config::openvpn::ta_key_content: |
+  #
+  # 2048 bit OpenVPN static key
+  #
+  -----BEGIN OpenVPN Static key V1-----
+  56e44444d972a3cd4ff35a3807d66d13
+  9f8e750ad563573a5f58773b872e8074
+  e5707ce6abb6fcd850c142a7324f060b
+  310cac8c6e9cf66a448e5663b030129a
+  13428eac9ee951131d749ca5ec33bbc9
+  fe0c3239897a021f8606e7e796479d11
+  a1d1ef2040d60eba519fe68df1d925fd
+  213286ee0c407907c49e819deb45b22c
+  8a8c7955fd38c48b2bec54f077db5686
+  fcd2ef32f5895078b2442cba6bbe1436
+  065fa49a50ae32f1d50e34978a1163c9
+  b2a4167b14486062737cedc54ae142cc
+  f6e517b69db9948cd6d5464217d52838
+  402cea24ea579ea620af9c87ab5ad27a
+  6ee1c4703239f95f0acb51d813eea324
+  3378fd053a1672a1a207eba325ccd9bb
+  -----END OpenVPN Static key V1-----
+
+
+# SSH public key for accessing sensors from admin server.
+# Usage: ssh_to_gen3_device.sh $device_id (e.g. ssh_to_gen3_device.sh 18199209daba6026)
+sf::config::ssh::authorized_keys: |
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCaPcX4GhEBTFLsBpVFEUk4bd1TvQ3VtKKk3O9gKE8eLgwmkC47FudIsdZ2WBj6EcdBUPiM7hB8QPNWOl5TAu2XRR568nAFja9Jfr5LAEaEAC4u4V7t7ZYvqAHNeoMMAxYcBtin9Y8OEUBQtJzM07KT0NsX0/tzj8tlr1fHB1GATkViB0o6CWttR+Ddtm6ab1WRk4eZX82swrpYPm1/Xk/T8YhohYDpViHxAQ0J2sIeinW7pFUJbINmIuRcglhofQsZEIOEF3qU7WHj3h9XQ8DosWposI0JLLB+0xQvfjx7mXAi8uz+wRGtcyo0gbF70ghnp1ffwhfZ+xykxu35JH8FvRcyyGQQpysGotnvIr9AmhFRQX8Toe8LuCbtsjBpBlBC27RqCeJC+igXJEklH3i7DvCpdeHRBcvepyYaff6BVUGfuGH7RpU/YGoe0jpDtxGJOVrSv9+FoNNlYZQDFO4iIVcoH7WKcPO/ntPRH//WR2/UKds4JXo9vX2D/cS8quQBLBOAfa13bW0f4Nv1AnFdzAqPaKb4t+a4UiRk49w+5xgY0nD26nba2vGlBObe4OMbfC6K5ww3dW38B4iRmO558dNw3OzdR1txhyDokGvtZiXDWyvm0df7GdEYZbJmkxU/iGpEk+TtZuccTdrWtTGnYK/h1Ci7M4VrIl8jX33+Ow==
+
+# setup pyscripts version
+sf::pyscripts::package_version: '0.11.0'
+
+# pyrocket2 config - provided by Skyfortress. Uses `hfs_user` and `hfs_password` for auth.
+sf::pyrocket_enc::url: https://build1.swdev.eraketa.com/common/pyrocket2/202603271605_pyrocket2_0.2.6.enc
+sf::pyrocket_enc::sha256: 631e90f84c6f611b7e88469328c109252afa7b9ee9ffa0d682231f5dfdc8dec1
+sf::pyrocket_enc::requirements_sha256: 371645cbd016618b722f15514a0b48d8b381113a26661bcdc40112561416a622
+sf::pyrocket_enc::pyrocket_app_major_version: 2
+
+## A bitmask to enable or disable specific detectors.
+# NONE = 0
+# DEMO = 1 << 0
+# ROCKET = 1 << 1          # a detector of MISSILES with wistle (kalibr, jets, etc) that are close (<=500m)
+# DRONE = 1 << 2           # a detector of ICE engines
+# JET = 1 << 3             # a detector of JET engines without wistle (F16, etc) on longer distances.
+# QUADROCOPTER = 1 << 4    # experimental and highly noisy detector of electic UAVs
+# # if this is enabled, DRONE must also be enabled for it to work.
+# JET_DRONE = 1 << 5       # a detector of drones with jet engines (shahed with a jet engine). Also detects high-altitude jet planes (at 10km).
+sf::pyrocket_enc::pyrocket_detect_targets: 47  # all but QC
+
+# GPS Spoofing Config - for now we just determine if GPS is spoofed and send it as a telemetry to zabbix.
+sf::config::gps::spoofing:
+  # consider time spoofed if GPS time drifts more than this amount of seconds from NTP time.
+  time_drift_seconds: 3600
+  # do not check GPS Location spoofing if number of sats is less than this amount
+  min_satellites: 2
+  # if GPS location is spoofed, the sensor will jump from one of its past locations, this defines
+  # the maximum distance of that jump. If exceeds - GPS location is spoofed, report that to zabbix.
+  max_distance: 1000000.0
+
+#### Audio uploading backend config. GCP Firebase and S3 are supported (both self-hosted and AWS S3).
+#### Only one of them can be configured at a time, or none.
+
+# TODO: Decide on audio upload backend. Options:
+# 1. GCP Firebase (vendor-provided credentials)
+# 2. AWS S3 (we provision a bucket in cochlearis account)
+# 3. Self-hosted S3 (Minio/Garage on the network host)
+
+# Firebase — disabled until credentials are provided
+sf::pyrocket_enc::firebase::enabled: false
+# sf::pyrocket_enc::firebase::bucket: $CHANGEME_BUCKET_NAME
+# sf::pyrocket_enc::firebase::creds_json: |
+#   { ... GCP service account JSON ... }
+
+# S3 — disabled until configured
+# sf::pyrocket_enc::s3:
+#   enabled: true
+#   bucket: $CHANGEME
+#   access_key: $CHANGEME
+#   secret_key: $CHANGEME
+#   endpoint_url: $CHANGEME
+#   region_name: $CHANGEME
+#   prefix: $CHANGEME
