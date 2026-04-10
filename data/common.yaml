@@ -3,6 +3,8 @@
 # Mirrored from vendor build1.swdev.eraketa.com on 2026-04-10.
 hfs_user: 'admin'
 hfs_password: 'NhQnV8wKjf9i0CR7byj7Bw=='
+hfs_domain: 'hfs.skysense.desertbread.net:7443'
+hfs_prefix: 'https://hfs.skysense.desertbread.net:7443/common'
 pip_extra_index_url: 'https://admin:NhQnV8wKjf9i0CR7byj7Bw==@hfs.skysense.desertbread.net:7443/common/'
 
 # how often puppet should trigger its run. In dev, can be 3-5m, in prod recommended at least 30m.
@@ -14,6 +16,8 @@ sf::config::modem::modem_version: 0.4.5
 # MQTT data through VPN.
 sf::config::hosts::hosts:
   - host: mqtt.skysense.desertbread.net
+    ip: 10.10.0.1
+  - host: hfs.skysense.desertbread.net
     ip: 10.10.0.1
 
 sf::config::zabbix::server:

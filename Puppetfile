@@ -26,4 +26,4 @@ mod 'pythonvenv',
 # main sensor configuration module
 mod 'sf',
     :git => 'git@github.com-sf:bavovna-ua/puppet-module-sf.git',
-    :tag => '0.8.7'
+    :tag => '0.9.0'
