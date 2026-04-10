@@ -1,9 +1,9 @@
 ---
-# Vendor HFS (HTTP file server) credentials for pulling sensor binaries.
-# TODO: Mirror files to our Caddy HFS and update URLs to point there.
-hfs_user: 'aor'
-hfs_password: 'l31dUcStIqqrAqjTHtFw'
-pip_extra_index_url: 'https://aor:l31dUcStIqqrAqjTHtFw@build1.swdev.eraketa.com/common/'
+# HFS credentials — sensors pull binaries from our Caddy HFS over device VPN.
+# Mirrored from vendor build1.swdev.eraketa.com on 2026-04-10.
+hfs_user: 'admin'
+hfs_password: 'NhQnV8wKjf9i0CR7byj7Bw=='
+pip_extra_index_url: 'https://admin:NhQnV8wKjf9i0CR7byj7Bw==@hfs.skysense.desertbread.net:7443/common/'
 
 # how often puppet should trigger its run. In dev, can be 3-5m, in prod recommended at least 30m.
 sf::config::puppet_config::runinterval_value: 30m
@@ -73,7 +73,7 @@ sf::config::ssh::authorized_keys: |
 sf::pyscripts::package_version: '0.11.0'
 
 # pyrocket2 config - provided by Skyfortress. Uses `hfs_user` and `hfs_password` for auth.
-sf::pyrocket_enc::url: https://build1.swdev.eraketa.com/common/pyrocket2/202603271605_pyrocket2_0.2.6.enc
+sf::pyrocket_enc::url: https://admin:NhQnV8wKjf9i0CR7byj7Bw==@hfs.skysense.desertbread.net:7443/common/pyrocket2/202603271605_pyrocket2_0.2.6.enc
 sf::pyrocket_enc::sha256: 631e90f84c6f611b7e88469328c109252afa7b9ee9ffa0d682231f5dfdc8dec1
 sf::pyrocket_enc::requirements_sha256: 371645cbd016618b722f15514a0b48d8b381113a26661bcdc40112561416a622
 sf::pyrocket_enc::pyrocket_app_major_version: 2
