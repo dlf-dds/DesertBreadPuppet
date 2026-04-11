@@ -106,23 +106,9 @@ sf::config::gps::spoofing:
 #### Audio uploading backend config. GCP Firebase and S3 are supported (both self-hosted and AWS S3).
 #### Only one of them can be configured at a time, or none.
 
-# TODO: Decide on audio upload backend. Options:
-# 1. GCP Firebase (vendor-provided credentials)
-# 2. AWS S3 (we provision a bucket in cochlearis account)
-# 3. Self-hosted S3 (Minio/Garage on the network host)
-
-# Firebase — disabled until credentials are provided
+# Firebase — disabled, using AWS S3 instead.
 sf::pyrocket_enc::firebase::enabled: false
-# sf::pyrocket_enc::firebase::bucket: $CHANGEME_BUCKET_NAME
-# sf::pyrocket_enc::firebase::creds_json: |
-#   { ... GCP service account JSON ... }
 
-# S3 — disabled until configured
-# sf::pyrocket_enc::s3:
-#   enabled: true
-#   bucket: $CHANGEME
-#   access_key: $CHANGEME
-#   secret_key: $CHANGEME
-#   endpoint_url: $CHANGEME
-#   region_name: $CHANGEME
-#   prefix: $CHANGEME
+# S3 audio upload credentials are injected at runtime by refresh-hiera-secrets.sh
+# into data/secrets.yaml (fetched from AWS Secrets Manager via instance profile).
+# See: ansible-roles/sf/r10k/templates/refresh-hiera-secrets.sh
